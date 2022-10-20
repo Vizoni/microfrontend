@@ -23,6 +23,20 @@ registerApplication({
   activeWhen: ['/react-multiples'],
 });
 
+// registerApplication({
+//   name: "@rvp/react-parcel",
+//   app: () =>
+//   System.import("@rvp/react-parcel"),
+//   activeWhen: (location) => location.pathname === '/react-parcel',
+// });
+
+registerApplication({
+  name: "@rvp/react-route",
+  app: () =>
+  System.import("@rvp/react-route"),
+  activeWhen: (location) => location.pathname === '/react-route',
+});
+
 
 start({
   urlRerouteOnly: true,
