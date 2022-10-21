@@ -1,57 +1,65 @@
 import { registerApplication, start } from "single-spa";
 
-registerApplication({
-  name: "@single-spa/welcome",
-  app: () =>
-    System.import(
-      "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
-    ),
-  activeWhen: (location) => location.pathname === '/',
-});
+fetch("https://run.mocky.io/v3/ade44f21-777f-4086-b660-c084523c8e07")
+  .then(res => res.json())
+  .then(responseRoutesAPI => {
+    responseRoutesAPI.applications.map(singleRoute => {
+      registerApplication({
+        name: singleRoute.name,
+        app: () => System.import(singleRoute.package),
+        activeWhen: singleRoute.exact ? 
+          (location) => location.pathname === singleRoute.activeWhen :
+          [singleRoute.activeWhen],
+      });
+    })
+  })
+  .finally(() => {
+    start({
+      urlRerouteOnly: true,
+    });
+  })
 
-registerApplication({
-  name: "@rvp/react-single",
-  app: () =>
-  System.import("@rvp/react-single"),
-  activeWhen: (location) => location.pathname === '/react-single',
-});
+  // RETORNO DA API:
 
-registerApplication({
-  name: "@rvp/react-multiples",
-  app: () =>
-  System.import("@rvp/react-multiples"),
-  activeWhen: ['/react-multiples'],
-});
-
-// registerApplication({
-//   name: "@rvp/react-parcel",
-//   app: () =>
-//   System.import("@rvp/react-parcel"),
-//   activeWhen: (location) => location.pathname === '/react-parcel',
-// });
-
-registerApplication({
-  name: "@rvp/react-route",
-  app: () =>
-  System.import("@rvp/react-route"),
-  activeWhen: (location) => location.pathname === '/react-route',
-});
-
-registerApplication({
-  name: "@rvp/react-lazy",
-  app: () =>
-  System.import("@rvp/react-lazy"),
-  activeWhen: ['/react-lazy'],
-});
-
-registerApplication({
-  name: "@rvp/react-header",
-  app: () =>
-  System.import("@rvp/react-header"),
-  activeWhen: ['/'],
-});
-
-
-start({
-  urlRerouteOnly: true,
-});
+  /*
+  {
+  "applications": [
+    {
+      "name": "@single-spa/welcome",
+      "package": "@single-spa/welcome",
+      "activeWhen": "/",
+      "exact": true
+    },
+     {
+      "name": "@rvp/react-single",
+      "package": "@rvp/react-single",
+      "activeWhen": "/react-single",
+      "exact": true
+    },
+    {
+      "name": "@rvp/react-multiples",
+      "package": "@rvp/react-multiples",
+      "activeWhen": "/react-multiples",
+      "exact": false
+    },
+    {
+      "name": "@rvp/react-route",
+      "package": "@rvp/react-route",
+      "activeWhen": "/",
+      "exact": true
+    },
+      {
+      "name": "@rvp/react-lazy",
+      "package": "@rvp/react-lazy",
+      "activeWhen": "/react-lazy",
+      "exact": false
+    },
+    {
+      "name": "@rvp/react-header",
+      "package": "@rvp/react-header",
+      "activeWhen": "/",
+      "exact": false
+    }
+  ]
+}
+  */
