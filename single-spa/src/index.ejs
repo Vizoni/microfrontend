@@ -22,20 +22,9 @@
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
 
   <% if (isLocal) { %>
-  <script type="systemjs-importmap">
-    {
-      "imports": {
-        "@rvp/root-config": "//localhost:9000/rvp-root-config.js",
-        "@rvp/react-single": "//localhost:8500/rvp-react-single.js",
-        "@rvp/react-multiples": "//localhost:8500/rvp-react-multiples.js",
-        "@rvp/react-parcel": "//localhost:8501/rvp-react-parcel.js",
-        "@rvp/react-route": "//localhost:8500/rvp-react-route.js",
-        "@rvp/react-lazy": "//localhost:8500/rvp-react-lazy.js",
-        "@rvp/utils": "//localhost:8600/rvp-utils.js",
-        "@rvp/react-header": "//localhost:8700/rvp-react-header.js"
-      }
-    }
-  </script>
+  <script type="systemjs-importmap" src="https://api.jsonbin.io/v3/b/635299150e6a79321e300fe2/latest?meta=false"></script>
+  <% } else { %>
+    <script type="systemjs-importmap" src="https://api.jsonbin.io/v3/b/635299150e6a79321e300fe2/latest?meta=false"></script>
   <% } %>
 
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
